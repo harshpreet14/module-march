@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import GenreFilter from './GenreFilter'
+import MovieList from './MovieList'
 import './App.css'
 
 
@@ -25,11 +25,21 @@ const movies = [
 const genres = [ "Drama", "Crime", "Action", "Fantasy", "Western", "Science Fiction", "Thriller", "War", "Animation", ];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedGenre, setSelectedGenre] = useState('All');
+
+  // Function to handle genre selection, updates the state
+  const handleGenreSelect = (genre) => {
+    setSelectedGenre(genre);
+  };
+
+  // Filter the movies based on the selected genre
+  const filteredMovies = selectedGenre === 'All' ? movies : movies.filter(movie => movie.genre === selectedGenre);
 
   return (
     <>
-      
+    <p className='text-5xl font-semibold text-center'>Top 15 Movies of All Time</p>
+     <GenreFilter genres={genres} onGenreSelect={handleGenreSelect}/>
+     <MovieList movies={filteredMovies}/>
     </>
   )
 }
